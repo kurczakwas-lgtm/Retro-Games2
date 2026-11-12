@@ -1,0 +1,57 @@
+/* ---------- QWERTY keyboard (Wisielec) ---------- */
+.kb.qwerty{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:100%}
+.kb-row{display:flex;gap:6px;justify-content:center;flex-wrap:nowrap}
+.kb-row.r1{margin-left:22px}.kb-row.r2{margin-left:60px}.kb-row.r3{margin-top:4px}
+.kb-row.r3 .key{background:#3a2a78;font-size:12px}
+@media(max-width:640px){.kb-row{gap:3px}.kb-row .key{width:8.4vw;max-width:40px;height:44px;font-size:10px}.kb-row.r1{margin-left:4vw}.kb-row.r2{margin-left:10vw}}
+
+/* ---------- kategorie w menu ---------- */
+.cat-tabs{justify-content:center;margin:0 auto 18px}
+.lb-me{text-align:center;margin:8px 0}.lb-note{text-align:center;opacity:.7;margin-top:14px}
+.lb-body .period{margin-bottom:6px}
+
+/* ---------- szachy (styl chess.com) ---------- */
+.chess2{--bs:min(560px,94vw);--lt:#eeeed2;--dk:#769656;display:flex;gap:22px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+.ch-main{display:flex;flex-direction:column;gap:8px;width:var(--bs)}
+.ch-player{display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.35);border-left:4px solid transparent;min-height:42px}
+.ch-player.turn{border-left-color:var(--yellow);background:rgba(255,225,77,.08)}
+.ch-player .nm{font-weight:normal;font-size:20px}
+.ch-dot{width:14px;height:14px;border-radius:50%;border:2px solid #000}.ch-dot.w{background:#fff}.ch-dot.b{background:#222}
+.ch-player .caps{display:flex;align-items:center;flex:1;min-width:0;overflow:hidden;font-size:18px;line-height:1}
+.ch-player .cp{margin-right:-6px}.ch-player .cp.w{color:#fff;-webkit-text-stroke:.6px #111}.ch-player .cp.b{color:#2b2b2b;text-shadow:0 0 1px #fff}
+.ch-player .caps em{font-style:normal;margin-left:12px;color:var(--muted)}
+.ch-player .clock{margin-left:auto;font-family:var(--px);font-size:14px;background:#222;color:#aaa;padding:6px 10px;border-radius:3px}
+.ch-player .clock.run{background:#f3f3f3;color:#111}.ch-player .clock.low{background:#b3261e;color:#fff}
+.ch-board{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));width:var(--bs);aspect-ratio:1;border:0;box-shadow:0 0 0 4px #000,8px 8px 0 #000;touch-action:none;user-select:none;-webkit-user-select:none}
+.ch-board .sq{min-width:0;min-height:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;padding:0;border:0;cursor:pointer}
+.ch-board .sq.lt{background:var(--lt)}.ch-board .sq.dk{background:var(--dk)}
+.ch-board .sq.last.lt{background:#f6f669}.ch-board .sq.last.dk{background:#baca2b}
+.ch-board .sq.sel.lt{background:#f6f669}.ch-board .sq.sel.dk{background:#baca2b}
+.ch-board .sq.hintsq{box-shadow:inset 0 0 0 4px #2ef2ff}
+.ch-board .sq.chk{background:radial-gradient(circle,#ff2d2d 0%,#e63232 35%,rgba(230,50,50,0) 75%),var(--dk)}
+.ch-board .sq.chk.lt{background:radial-gradient(circle,#ff2d2d 0%,#e63232 35%,rgba(230,50,50,0) 75%),var(--lt)}
+.ch-board .sq .rk,.ch-board .sq .fl{position:absolute;text-decoration:none;font:700 12px/1 system-ui,sans-serif;pointer-events:none}
+.ch-board .sq .rk{top:3px;left:4px}.ch-board .sq .fl{bottom:2px;right:4px}
+.ch-board .sq.lt .rk,.ch-board .sq.lt .fl{color:var(--dk)}.ch-board .sq.dk .rk,.ch-board .sq.dk .fl{color:var(--lt)}
+.ch-board .sq .mvdot{position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(0,0,0,.2);pointer-events:none}
+.ch-board .sq.cap::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,transparent 58%,rgba(0,0,0,.22) 60%);pointer-events:none}
+.ch-board .sq:hover.tg,.ch-board .sq:hover.cap{box-shadow:inset 0 0 0 4px rgba(255,255,255,.55)}
+.ch-board .pc{font-size:calc(var(--bs) / 8 * .84);line-height:1;pointer-events:none;font-family:"Segoe UI Symbol","Noto Sans Symbols 2","Apple Symbols",sans-serif}
+.pc.w{color:#fff;-webkit-text-stroke:1.4px #222;text-shadow:0 2px 2px rgba(0,0,0,.35)}
+.pc.b{color:#2a2a2a;-webkit-text-stroke:1px #000;text-shadow:0 2px 2px rgba(0,0,0,.35)}
+.ch-board .sq.dragsrc .pc{opacity:.3}
+.ch-board .mvdot{display:block;background:rgba(0,0,0,.2)}
+.ch-board .pc.slide{animation:pcslide .16s ease-out}
+@keyframes pcslide{from{transform:translate(var(--dx),var(--dy))}to{transform:none}}
+.pc-ghost{position:fixed;z-index:9999;pointer-events:none;text-align:center;filter:drop-shadow(0 6px 6px rgba(0,0,0,.5));font-family:"Segoe UI Symbol","Noto Sans Symbols 2","Apple Symbols",sans-serif}
+.ch-side{display:flex;flex-direction:column;gap:10px;width:min(300px,94vw)}
+.ch-side .ch-info{color:var(--muted)}
+.ch-moves{height:min(300px,40vh);overflow-y:auto;background:rgba(0,0,0,.4);border:2px solid #000;padding:6px;font-size:20px}
+.ch-moves .mr{display:grid;grid-template-columns:2.2em 1fr 1fr;padding:1px 4px}.ch-moves .mr:nth-child(odd){background:rgba(255,255,255,.04)}
+.ch-moves .mn{color:var(--muted)}
+.ch-tools{display:flex;flex-wrap:wrap;gap:8px}
+.ch-offer{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:rgba(255,225,77,.1);padding:8px;border:2px solid var(--yellow)}
+.ch-promo{display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap;justify-content:center}
+.ch-promo .px-btn{font-size:30px;background:#e8d9ff;color:#14082e;padding:4px 14px}
+@media(max-width:860px){.ch-side{width:var(--bs)}.ch-moves{height:110px}}
+

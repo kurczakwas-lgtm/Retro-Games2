@@ -1,4 +1,4 @@
-﻿-- Uruchom w Supabase: SQL Editor -> New query -> wklej CAŁOŚĆ -> Run
+-- Uruchom w Supabase: SQL Editor -> New query -> wklej CAŁOŚĆ -> Run
 -- (można uruchamiać wielokrotnie – skrypt jest bezpieczny)
 
 -- ============ WYNIKI ============
@@ -97,4 +97,3 @@ create view public.leaderboard as
   left join public.profiles p on p.user_id = s.user_id
   group by s.nick, s.game, p.avatar;
 grant select on public.leaderboard to anon, authenticated;
-

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RETRO ARCADE – 17 gier online: Szachy, Warcaby, Reversi, Tetris, 2048, Saper i więcej</title>
+  <meta name="description"
+    content="Retro Arcade – darmowe gry w stylu pixel-art: szachy, warcaby, reversi, tetris, 2048, saper, statki, snake i więcej. Graj z botem lub z przyjacielem online i walcz o miejsce w rankingu.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/extra.css">
+  <link rel="stylesheet" href="css/checkers.css">
+  <link rel="stylesheet" href="css/reversi.css">
+  <link rel="stylesheet" href="css/tetris.css">
+  <link rel="stylesheet" href="css/g2048.css">
+  <link rel="stylesheet" href="css/mines.css">
+  <link rel="stylesheet" href="css/more.css">
+</head>
+
+<body>
+  <div class="bg-stars"></div>
+  <div class="bg-grid"></div>
+  <div class="crt"></div>
+  <div class="wipe" id="wipe"></div>
+  <div class="intro" id="intro" role="button" tabindex="0">
+    <div class="intro-box">
+      <h1 class="title"><span>RETRO</span> <span class="alt">ARCADE</span></h1>
+      <p class="intro-start" data-i18n="pressStart">NACIŚNIJ START</p>
+      <small class="hint" data-i18n="insertCoin">Kliknij lub naciśnij dowolny klawisz</small>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <button class="logo" id="logoBtn" aria-label="Home">
+      <span class="logo-a">RETRO</span><span class="logo-b">ARCADE</span>
+    </button>
+    <nav class="top-actions">
+      <button class="px-btn small" id="lbBtn" data-i18n="leaderboard">Ranking</button>
+      <button class="px-btn small cyan" id="friendsBtn" data-i18n="friends" hidden>Znajomi</button>
+      <button class="px-btn small ghost" id="muteBtn" aria-label="Sound" hidden>🔊</button>
+      <button class="px-btn small ghost" id="settingsBtn" aria-label="Settings" title="Settings" hidden>⚙</button>
+      <button class="px-btn small ghost" id="langBtn" aria-label="Language" hidden>PL</button>
+      <div class="user-wrap" id="userWrap" hidden>
+        <button class="user-chip" id="userChip" aria-expanded="false"></button>
+        <div class="user-menu" id="userMenu" hidden>
+          <button type="button" class="um-item" data-um="profile">👤 <span data-i18n="myProfile">Mój
+              profil</span></button>
+          <button type="button" class="um-item" data-um="badges">🏅 <span
+              data-i18n="achievements">Osiągnięcia</span></button>
+          <button type="button" class="um-item" data-um="shop">🪙 <span data-i18n="shopMenu">Sklepik</span></button>
+          <button type="button" class="um-item" data-um="friends">👥 <span data-i18n="friends">Znajomi</span></button>
+          <button type="button" class="um-item" data-um="settings">⚙ <span
+              data-i18n="settings">Ustawienia</span></button>
+          <button type="button" class="um-item owner-item" id="umOwnerItem" data-um="owner" hidden>🛡 <span
+              data-i18n="ownerMenu">Panel Ownera</span></button>
+          <div class="um-quick">
+            <button type="button" class="um-qbtn" data-um="mute" id="umMuteBtn" title="Sound">🔊</button>
+            <button type="button" class="um-qbtn" data-um="lang" id="umLangBtn" title="Language">PL</button>
+          </div>
+          <hr class="um-sep">
+          <button type="button" class="um-item danger" data-um="logout">🚪 <span
+              data-i18n="logout">Wyloguj</span></button>
+        </div>
+      </div>
+      <button class="px-btn small pink" id="authBtn" data-i18n="login">Zaloguj</button>
+    </nav>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <dialog id="authDlg" class="dlg">
+    <form method="dialog" id="authForm" class="dlg-box">
+      <h2 id="authTitle"></h2>
+      <div class="tabs">
+        <button type="button" class="tab" id="tabLogin" data-i18n="login">Zaloguj</button>
+        <button type="button" class="tab" id="tabReg" data-i18n="register">Rejestracja</button>
+      </div>
+      <label class="field"><span data-i18n="nick">Nick</span>
+        <input id="authNick" autocomplete="username" maxlength="16" required>
+      </label>
+      <label class="field"><span data-i18n="password">Hasło</span>
+        <input id="authPass" type="password" autocomplete="current-password" minlength="6" required>
+      </label>
+      <p class="hint" data-i18n="nickRule"></p>
+      <p class="err" id="authErr"></p>
+      <div class="row">
+        <button type="submit" class="px-btn pink" id="authSubmit">OK</button>
+        <button type="button" class="px-btn ghost" id="authCancel" data-i18n="cancel">Anuluj</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/sfx.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/supa.js"></script>
+  <script src="js/net.js"></script>
+  <script src="js/social.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/badges.js"></script>
+  <script src="js/games/ttt.js"></script>
+  <script src="js/games/hangman.js"></script>
+  <script src="js/games/battleship.js"></script>
+  <script src="js/games/rps.js"></script>
+  <script src="js/games/connect4.js"></script>
+  <script src="js/games/pong.js"></script>
+  <script src="js/games/snake.js"></script>
+  <script src="js/games/chess.js"></script>
+  <script src="js/games/checkers.js"></script>
+  <script src="js/games/reversi.js"></script>
+  <script src="js/games/tetris.js"></script>
+  <script src="js/games/g2048.js"></script>
+  <script src="js/games/minesweeper.js"></script>
+  <script src="js/games/gomoku.js"></script>
+  <script src="js/games/memory.js"></script>
+  <script src="js/games/breakout.js"></script>
+  <script src="js/games/flappy.js"></script>
+  <script src="js/games/wordle.js"></script>
+  <script src="js/games/invaders.js"></script>
+  <script src="js/games/pacman.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

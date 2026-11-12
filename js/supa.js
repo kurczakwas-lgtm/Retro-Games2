@@ -40,6 +40,8 @@
         const { error } = await c.from(tbl).select('*', { head: true, count: 'exact' }).limit(1);
         if (error) return tbl + ': ' + error.message;
       }
+      const { error: stErr } = await c.from('stats').select('*', { head: true, count: 'exact' }).limit(1);
+      if (!stErr) return true;
       const { error } = await c.from('leaderboard').select('*', { head: true, count: 'exact' }).limit(1);
       return error ? 'leaderboard: ' + error.message : true;
     },
@@ -120,6 +122,29 @@
     },
     async leaderboard() {
       const c = Supa.client(); if (!c) return null;
+      const [{ data: st, error: stErr }, { data: profs }] = await Promise.all([
+        c.from('stats').select('*').limit(5000),
+        c.from('profiles').select('user_id,nick,avatar,points')
+      ]);
+      if (!stErr && st) {
+        const pMap = {};
+        (profs || []).forEach(p => { pMap[p.user_id] = p; });
+        const out = st.filter(r => (r.points || 0) > 0 || (r.games || 0) > 0 || (r.wins || 0) > 0).map(r => {
+          const pr = pMap[r.user_id] || {};
+          return {
+            nick: pr.nick || r.nick,
+            game: r.game,
+            avatar: pr.avatar || '👾',
+            points: r.points || 0,
+            wins: r.wins || 0,
+            games: r.games || 0
+          };
+        });
+        (profs || []).forEach(p => {
+          out.push({ nick: p.nick, game: 'bonus', avatar: p.avatar || '👾', points: p.points || 0, wins: 0, games: 0 });
+        });
+        return out;
+      }
       const { data, error } = await c.from('leaderboard').select('*').limit(2000);
       return error ? null : data;
     }
